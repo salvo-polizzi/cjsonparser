@@ -128,6 +128,10 @@ static int parse_object(json_value *v) {
     if (!consumeToken(OPEN_CURLY_BRACKET)) return 0;
     
     v->type = JSON_OBJECT;
+    v->u.object.count = 0;
+
+    /* object with no elements */
+    if (consumeToken(CLOSE_CURLY_BRACKET)) return 1;
 
     /* iterate at least one time for a single object */
     do {
@@ -176,6 +180,10 @@ static int parse_array(json_value *v) {
     if(!consumeToken(OPEN_SQUARE_BRACKET)) return 0;
 
     v->type = JSON_ARRAY;
+    v->u.array.count = 0;
+
+    /* array with no elements */
+    if(consumeToken(CLOSE_SQUARE_BRACKET)) return 1;
 
     /* iterate for at least one element */
     do {
