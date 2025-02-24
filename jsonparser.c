@@ -47,57 +47,6 @@ static json_value* safeJsonMalloc() {
     return val;
 }
 
-/*
-static int copyString(char *dest, char *source) {
-    dest = malloc(strlen(source)+1);
-    if (!dest) {
-        fprintf(stderr, "failed to allocate string to copy\n");
-        return 0;
-    }
-    strcpy(dest, source);
-    return 1;
-}
-
-static int copyJsonArray(json_value *dest, json_value *source) {
-    dest->u.array.items = calloc(source->u.array.count, sizeof(json_value *));
-    dest->u.array.count = source->u.array.count;
-
-    for (int i = 0; i < dest->u.array.count; i++) {
-        dest->u.array.items[i] = safeJsonMalloc();
-        *dest->u.array.items[i] = *source->u.array.items[i];
-    }
-    return 1; 
-}
-
-static void copyJsonValue(json_value *dest, json_value *source) {
-    dest = malloc(sizeof(json_value));
-    if (!dest) {
-        fprintf(stderr, "failed to allocate json_value\n");
-        return 0;
-    }
-
-    switch (source->type) {
-        case JSON_BOOLEAN:
-            dest->u.boolean = source->u.boolean;
-            break;
-        case JSON_NUMBER:
-            dest->u.number = source->u.number;
-            break;
-        case JSON_STRING:
-            copyString(dest->u.string, source->u.string);
-            break;
-        case JSON_ARRAY:
-            copyJsonArray(dest, source);
-            break;
-        case JSON_OBJECT:
-            copyJsonObject();
-            break;
-        default:
-            break;
-    }
-}
-*/
-
 /** Consume a token of a specific type
  * return 1 if it is of the specified type
  * return 0 otherwise
@@ -402,7 +351,6 @@ int json_object_set(json_value *object, const char *key, json_value *value) {
 
     uint32_t ind = object->u.object.count++;
     /* TODO make a deep copy of the objects */
-    //object->u.object.keys[ind] = key; 
     object->u.object.keys[ind] = calloc(strlen(key)+1,sizeof(char));
     strcpy(object->u.object.keys[ind], key);
     object->u.object.values[ind] = value;
@@ -484,7 +432,6 @@ void json_print_value(const json_value *v) {
         return;
     }
 
-    //printf("value:\n\t");
     switch (v->type) {
         case JSON_NULL:
             printf("null");
@@ -518,5 +465,4 @@ void json_print_value(const json_value *v) {
             break;
     }
 
-    //printf("\n");
 }
