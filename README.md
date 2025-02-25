@@ -52,7 +52,7 @@ This command builds an executable named `tests` that runs a comprehensive suite 
 
 ### Serialization
 - `char *json_serialize(const json_value *value);` <br />
-  Serializes a JSON value into a string. The caller is responsible for freeing the returned string.
+  [*Not yet implemented*] Serializes a JSON value into a string. The caller is responsible for freeing the returned string.
 
 ### Memory Management
 - `void json_free(json_value *value);` <br />
